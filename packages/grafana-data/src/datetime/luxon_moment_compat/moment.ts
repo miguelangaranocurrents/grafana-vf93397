@@ -765,6 +765,11 @@ function normalizeZone(zone: string | Zone): Zone {
   let normalized = easyTzZoneCache.get(name);
 
   if (!normalized) {
+    // moment-timezone ignores unknown zone names (e.g. the internal 'default') and keeps the
+    // result in UTC, instead of producing an invalid date. Mirror that behavior.
+    if (!IANAZone.isValidZone(name)) {
+      return FixedOffsetZone.instance(0);
+    }
     normalized = new EasyTzZone(name);
     easyTzZoneCache.set(name, normalized);
   }

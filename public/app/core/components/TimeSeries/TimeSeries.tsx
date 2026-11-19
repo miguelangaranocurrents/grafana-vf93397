@@ -41,7 +41,7 @@ export function TimeSeries(props: TimeSeriesProps) {
 
   const renderLegend = useCallback(
     (uPlotConfig: UPlotConfigBuilder) => {
-      if (!uPlotConfig || (legend && !legend.showLegend) || !hasVisibleLegendSeries(uPlotConfig, frames)) {
+      if (!uPlotConfig || (legend && (!legend.showLegend || (legend.displayMode as string) === 'hidden')) || !hasVisibleLegendSeries(uPlotConfig, frames)) {
         return null;
       }
 
